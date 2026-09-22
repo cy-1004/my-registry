@@ -1,0 +1,23 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "rotating-hero-scene",
+  "title": "Rotating Hero Scene",
+  "description": "A floating, auto-rotating 3D torus knot hero built with react-three-fiber and drei.",
+  "dependencies": [
+    "three",
+    "@react-three/fiber",
+    "@react-three/drei"
+  ],
+  "files": [
+    {
+      "path": "registry/three/rotating-hero-scene/rotating-hero-scene.tsx",
+      "content": "\"use client\"\n\nimport * as React from \"react\"\nimport { Canvas } from \"@react-three/fiber\"\nimport { Float, OrbitControls } from \"@react-three/drei\"\n\nimport { cn } from \"@/lib/utils\"\n\nfunction RotatingKnot() {\n  return (\n    <Float speed={2} rotationIntensity={1} floatIntensity={1.5}>\n      <mesh>\n        <torusKnotGeometry args={[1, 0.32, 200, 32]} />\n        <meshStandardMaterial color=\"#6366f1\" roughness={0.25} metalness={0.6} />\n      </mesh>\n    </Float>\n  )\n}\n\ninterface RotatingHeroSceneProps {\n  className?: string\n}\n\nexport function RotatingHeroScene({ className }: RotatingHeroSceneProps) {\n  return (\n    <div className={cn(\"h-80 w-full\", className)}>\n      <Canvas camera={{ position: [0, 0, 5], fov: 45 }}>\n        <color attach=\"background\" args={[\"#111827\"]} />\n        <ambientLight intensity={0.5} />\n        <directionalLight position={[3, 3, 3]} intensity={1.5} />\n        <pointLight position={[-3, -2, -3]} intensity={0.6} color=\"#818cf8\" />\n        <RotatingKnot />\n        <OrbitControls enableZoom={false} autoRotate autoRotateSpeed={1.2} />\n      </Canvas>\n    </div>\n  )\n}\n",
+      "type": "registry:ui",
+      "target": "@components/three/rotating-hero-scene.tsx"
+    }
+  ],
+  "categories": [
+    "three"
+  ],
+  "type": "registry:ui"
+}

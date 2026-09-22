@@ -1,0 +1,21 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "scroll-fade-section",
+  "title": "Scroll Fade Section",
+  "description": "Fades and rises a section into view as it scrolls in, powered by GSAP ScrollTrigger.",
+  "dependencies": [
+    "gsap"
+  ],
+  "files": [
+    {
+      "path": "registry/scroll/scroll-fade-section/scroll-fade-section.tsx",
+      "content": "\"use client\"\n\nimport * as React from \"react\"\nimport gsap from \"gsap\"\nimport { ScrollTrigger } from \"gsap/ScrollTrigger\"\n\nimport { cn } from \"@/lib/utils\"\n\nif (typeof window !== \"undefined\") {\n  gsap.registerPlugin(ScrollTrigger)\n}\n\ninterface ScrollFadeSectionProps {\n  children: React.ReactNode\n  className?: string\n  y?: number\n  scroller?: Element | string\n}\n\nexport function ScrollFadeSection({\n  children,\n  className,\n  y = 40,\n  scroller,\n}: ScrollFadeSectionProps) {\n  const ref = React.useRef<HTMLDivElement>(null)\n\n  React.useEffect(() => {\n    const el = ref.current\n    if (!el) return\n\n    const ctx = gsap.context(() => {\n      gsap.fromTo(\n        el,\n        { opacity: 0, y },\n        {\n          opacity: 1,\n          y: 0,\n          duration: 0.8,\n          ease: \"power3.out\",\n          scrollTrigger: {\n            trigger: el,\n            scroller,\n            start: \"top 85%\",\n            toggleActions: \"play none none reverse\",\n          },\n        }\n      )\n    }, ref)\n\n    return () => ctx.revert()\n  }, [y, scroller])\n\n  return (\n    <div ref={ref} className={cn(className)}>\n      {children}\n    </div>\n  )\n}\n",
+      "type": "registry:ui",
+      "target": "@components/scroll/scroll-fade-section.tsx"
+    }
+  ],
+  "categories": [
+    "scroll"
+  ],
+  "type": "registry:ui"
+}

@@ -1,0 +1,21 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "text-reveal",
+  "title": "Text Reveal",
+  "description": "Word-by-word staggered entrance animation for headings and copy.",
+  "dependencies": [
+    "motion"
+  ],
+  "files": [
+    {
+      "path": "registry/ui-animations/text-reveal/text-reveal.tsx",
+      "content": "\"use client\"\n\nimport * as React from \"react\"\nimport { motion } from \"motion/react\"\n\nimport { cn } from \"@/lib/utils\"\n\ninterface TextRevealProps {\n  text: string\n  className?: string\n  delay?: number\n}\n\nexport function TextReveal({ text, className, delay = 0 }: TextRevealProps) {\n  const words = text.split(\" \")\n\n  return (\n    <p className={cn(\"flex flex-wrap gap-x-2\", className)}>\n      {words.map((word, i) => (\n        <span key={`${word}-${i}`} className=\"inline-block overflow-hidden pb-1\">\n          <motion.span\n            initial={{ y: \"100%\" }}\n            animate={{ y: 0 }}\n            transition={{\n              duration: 0.5,\n              delay: delay + i * 0.08,\n              ease: [0.22, 1, 0.36, 1],\n            }}\n            className=\"inline-block\"\n          >\n            {word}\n          </motion.span>\n        </span>\n      ))}\n    </p>\n  )\n}\n",
+      "type": "registry:ui",
+      "target": "@components/ui-animations/text-reveal.tsx"
+    }
+  ],
+  "categories": [
+    "ui-animations"
+  ],
+  "type": "registry:ui"
+}

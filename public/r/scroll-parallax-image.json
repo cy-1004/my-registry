@@ -1,0 +1,21 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "scroll-parallax-image",
+  "title": "Scroll Parallax Image",
+  "description": "Scroll-scrubbed parallax effect for images, powered by GSAP ScrollTrigger.",
+  "dependencies": [
+    "gsap"
+  ],
+  "files": [
+    {
+      "path": "registry/scroll/scroll-parallax-image/scroll-parallax-image.tsx",
+      "content": "\"use client\"\n\nimport * as React from \"react\"\nimport gsap from \"gsap\"\nimport { ScrollTrigger } from \"gsap/ScrollTrigger\"\n\nimport { cn } from \"@/lib/utils\"\n\nif (typeof window !== \"undefined\") {\n  gsap.registerPlugin(ScrollTrigger)\n}\n\ninterface ScrollParallaxImageProps {\n  src: string\n  alt: string\n  className?: string\n  speed?: number\n  scroller?: Element | string\n}\n\nexport function ScrollParallaxImage({\n  src,\n  alt,\n  className,\n  speed = 0.3,\n  scroller,\n}: ScrollParallaxImageProps) {\n  const wrapperRef = React.useRef<HTMLDivElement>(null)\n  const imageRef = React.useRef<HTMLImageElement>(null)\n\n  React.useEffect(() => {\n    const wrapper = wrapperRef.current\n    const image = imageRef.current\n    if (!wrapper || !image) return\n\n    const ctx = gsap.context(() => {\n      gsap.fromTo(\n        image,\n        { yPercent: -speed * 50 },\n        {\n          yPercent: speed * 50,\n          ease: \"none\",\n          scrollTrigger: {\n            trigger: wrapper,\n            scroller,\n            start: \"top bottom\",\n            end: \"bottom top\",\n            scrub: true,\n          },\n        }\n      )\n    }, wrapperRef)\n\n    return () => ctx.revert()\n  }, [speed, scroller])\n\n  return (\n    <div ref={wrapperRef} className={cn(\"relative overflow-hidden\", className)}>\n      {/* eslint-disable-next-line @next/next/no-img-element */}\n      <img\n        ref={imageRef}\n        src={src}\n        alt={alt}\n        className=\"h-[130%] w-full scale-110 object-cover\"\n      />\n    </div>\n  )\n}\n",
+      "type": "registry:ui",
+      "target": "@components/scroll/scroll-parallax-image.tsx"
+    }
+  ],
+  "categories": [
+    "scroll"
+  ],
+  "type": "registry:ui"
+}

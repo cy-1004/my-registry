@@ -1,0 +1,21 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "animated-button",
+  "title": "Animated Button",
+  "description": "Hover/press micro-interaction button built with motion.",
+  "dependencies": [
+    "motion"
+  ],
+  "files": [
+    {
+      "path": "registry/ui-animations/animated-button/animated-button.tsx",
+      "content": "\"use client\"\n\nimport * as React from \"react\"\nimport { motion, type HTMLMotionProps } from \"motion/react\"\n\nimport { cn } from \"@/lib/utils\"\n\ntype AnimatedButtonProps = HTMLMotionProps<\"button\">\n\nexport function AnimatedButton({\n  className,\n  children,\n  ...props\n}: AnimatedButtonProps) {\n  return (\n    <motion.button\n      whileHover={{ scale: 1.04 }}\n      whileTap={{ scale: 0.96 }}\n      transition={{ type: \"spring\", stiffness: 400, damping: 17 }}\n      className={cn(\n        \"inline-flex items-center justify-center rounded-lg bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground shadow-sm transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50\",\n        className\n      )}\n      {...props}\n    >\n      {children}\n    </motion.button>\n  )\n}\n",
+      "type": "registry:ui",
+      "target": "@components/ui-animations/animated-button.tsx"
+    }
+  ],
+  "categories": [
+    "ui-animations"
+  ],
+  "type": "registry:ui"
+}

@@ -1,0 +1,24 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "lottie-playback-controls",
+  "title": "Lottie Playback Controls",
+  "description": "Play/pause and restart controls for a Lottie animation.",
+  "dependencies": [
+    "lottie-react"
+  ],
+  "registryDependencies": [
+    "button"
+  ],
+  "files": [
+    {
+      "path": "registry/lottie/lottie-playback-controls/lottie-playback-controls.tsx",
+      "content": "\"use client\"\n\nimport * as React from \"react\"\nimport { Lottie, type LottieHandle } from \"lottie-react\"\nimport { Pause, Play, RotateCcw } from \"lucide-react\"\n\nimport { Button } from \"@/components/ui/button\"\nimport { cn } from \"@/lib/utils\"\n\ninterface LottiePlaybackControlsProps {\n  src: string | object\n  className?: string\n}\n\nexport function LottiePlaybackControls({\n  src,\n  className,\n}: LottiePlaybackControlsProps) {\n  const lottieRef = React.useRef<LottieHandle>(null)\n  const [playing, setPlaying] = React.useState(true)\n\n  const togglePlay = () => {\n    if (playing) {\n      lottieRef.current?.pause()\n    } else {\n      lottieRef.current?.play()\n    }\n    setPlaying(!playing)\n  }\n\n  const restart = () => {\n    lottieRef.current?.seek(0)\n    lottieRef.current?.play()\n    setPlaying(true)\n  }\n\n  return (\n    <div className={cn(\"flex flex-col items-center gap-3\", className)}>\n      <div className=\"h-32 w-32\">\n        <Lottie lottieRef={lottieRef} src={src} loop />\n      </div>\n      <div className=\"flex items-center gap-2\">\n        <Button size=\"icon\" variant=\"outline\" onClick={togglePlay}>\n          {playing ? <Pause className=\"size-4\" /> : <Play className=\"size-4\" />}\n        </Button>\n        <Button size=\"icon\" variant=\"outline\" onClick={restart}>\n          <RotateCcw className=\"size-4\" />\n        </Button>\n      </div>\n    </div>\n  )\n}\n",
+      "type": "registry:ui",
+      "target": "@components/lottie/lottie-playback-controls.tsx"
+    }
+  ],
+  "categories": [
+    "lottie"
+  ],
+  "type": "registry:ui"
+}

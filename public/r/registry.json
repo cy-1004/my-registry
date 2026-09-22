@@ -1,0 +1,222 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "name": "my-registry",
+  "homepage": "http://localhost:3000",
+  "items": [
+    {
+      "name": "animated-button",
+      "type": "registry:ui",
+      "title": "Animated Button",
+      "description": "Hover/press micro-interaction button built with motion.",
+      "categories": [
+        "ui-animations"
+      ],
+      "dependencies": [
+        "motion"
+      ],
+      "files": [
+        {
+          "path": "registry/ui-animations/animated-button/animated-button.tsx",
+          "type": "registry:ui",
+          "target": "@components/ui-animations/animated-button.tsx"
+        }
+      ]
+    },
+    {
+      "name": "text-reveal",
+      "type": "registry:ui",
+      "title": "Text Reveal",
+      "description": "Word-by-word staggered entrance animation for headings and copy.",
+      "categories": [
+        "ui-animations"
+      ],
+      "dependencies": [
+        "motion"
+      ],
+      "files": [
+        {
+          "path": "registry/ui-animations/text-reveal/text-reveal.tsx",
+          "type": "registry:ui",
+          "target": "@components/ui-animations/text-reveal.tsx"
+        }
+      ]
+    },
+    {
+      "name": "modal-transition",
+      "type": "registry:ui",
+      "title": "Modal Transition",
+      "description": "Animated dialog with fade/scale transitions via AnimatePresence, built on top of Animated Button.",
+      "categories": [
+        "ui-animations"
+      ],
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "http://localhost:3000/r/animated-button.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ui-animations/modal-transition/modal-transition.tsx",
+          "type": "registry:ui",
+          "target": "@components/ui-animations/modal-transition.tsx"
+        }
+      ]
+    },
+    {
+      "name": "scroll-fade-section",
+      "type": "registry:ui",
+      "title": "Scroll Fade Section",
+      "description": "Fades and rises a section into view as it scrolls in, powered by GSAP ScrollTrigger.",
+      "categories": [
+        "scroll"
+      ],
+      "dependencies": [
+        "gsap"
+      ],
+      "files": [
+        {
+          "path": "registry/scroll/scroll-fade-section/scroll-fade-section.tsx",
+          "type": "registry:ui",
+          "target": "@components/scroll/scroll-fade-section.tsx"
+        }
+      ]
+    },
+    {
+      "name": "scroll-parallax-image",
+      "type": "registry:ui",
+      "title": "Scroll Parallax Image",
+      "description": "Scroll-scrubbed parallax effect for images, powered by GSAP ScrollTrigger.",
+      "categories": [
+        "scroll"
+      ],
+      "dependencies": [
+        "gsap"
+      ],
+      "files": [
+        {
+          "path": "registry/scroll/scroll-parallax-image/scroll-parallax-image.tsx",
+          "type": "registry:ui",
+          "target": "@components/scroll/scroll-parallax-image.tsx"
+        }
+      ]
+    },
+    {
+      "name": "lottie-hover-player",
+      "type": "registry:ui",
+      "title": "Lottie Hover Player",
+      "description": "Plays a Lottie animation on hover and stops on mouse leave.",
+      "categories": [
+        "lottie"
+      ],
+      "dependencies": [
+        "lottie-react"
+      ],
+      "files": [
+        {
+          "path": "registry/lottie/lottie-hover-player/lottie-hover-player.tsx",
+          "type": "registry:ui",
+          "target": "@components/lottie/lottie-hover-player.tsx"
+        }
+      ]
+    },
+    {
+      "name": "lottie-playback-controls",
+      "type": "registry:ui",
+      "title": "Lottie Playback Controls",
+      "description": "Play/pause and restart controls for a Lottie animation.",
+      "categories": [
+        "lottie"
+      ],
+      "dependencies": [
+        "lottie-react"
+      ],
+      "registryDependencies": [
+        "button"
+      ],
+      "files": [
+        {
+          "path": "registry/lottie/lottie-playback-controls/lottie-playback-controls.tsx",
+          "type": "registry:ui",
+          "target": "@components/lottie/lottie-playback-controls.tsx"
+        }
+      ]
+    },
+    {
+      "name": "rotating-hero-scene",
+      "type": "registry:ui",
+      "title": "Rotating Hero Scene",
+      "description": "A floating, auto-rotating 3D torus knot hero built with react-three-fiber and drei.",
+      "categories": [
+        "three"
+      ],
+      "dependencies": [
+        "three",
+        "@react-three/fiber",
+        "@react-three/drei"
+      ],
+      "files": [
+        {
+          "path": "registry/three/rotating-hero-scene/rotating-hero-scene.tsx",
+          "type": "registry:ui",
+          "target": "@components/three/rotating-hero-scene.tsx"
+        }
+      ]
+    },
+    {
+      "name": "particle-field-background",
+      "type": "registry:ui",
+      "title": "Particle Field Background",
+      "description": "A slowly rotating field of points, useful as a hero/background layer, built with react-three-fiber.",
+      "categories": [
+        "three"
+      ],
+      "dependencies": [
+        "three",
+        "@react-three/fiber"
+      ],
+      "files": [
+        {
+          "path": "registry/three/particle-field-background/particle-field-background.tsx",
+          "type": "registry:ui",
+          "target": "@components/three/particle-field-background.tsx"
+        }
+      ]
+    },
+    {
+      "name": "hello-world",
+      "type": "registry:component",
+      "title": "Hello World",
+      "description": "Minimal internal test item used to verify the build/install pipeline for a non-registry:ui item type.",
+      "categories": [
+        "internal"
+      ],
+      "files": [
+        {
+          "path": "registry/_internal/hello-world/hello-world.tsx",
+          "type": "registry:component",
+          "target": "@components/internal/hello-world.tsx"
+        }
+      ]
+    },
+    {
+      "name": "gsap-tween-methods",
+      "type": "registry:ui",
+      "title": "GSAP Tween Methods",
+      "description": "Interactive comparison of gsap.to(), gsap.from(), gsap.fromTo(), and gsap.set() with a live code preview.",
+      "categories": [
+        "scroll"
+      ],
+      "dependencies": [
+        "gsap"
+      ],
+      "files": [
+        {
+          "path": "registry/scroll/gsap-tween-methods/gsap-tween-methods.tsx",
+          "type": "registry:ui",
+          "target": "@components/scroll/gsap-tween-methods.tsx"
+        }
+      ]
+    }
+  ]
+}

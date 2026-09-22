@@ -1,0 +1,21 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "lottie-hover-player",
+  "title": "Lottie Hover Player",
+  "description": "Plays a Lottie animation on hover and stops on mouse leave.",
+  "dependencies": [
+    "lottie-react"
+  ],
+  "files": [
+    {
+      "path": "registry/lottie/lottie-hover-player/lottie-hover-player.tsx",
+      "content": "\"use client\"\n\nimport * as React from \"react\"\nimport { Lottie, type LottieHandle } from \"lottie-react\"\n\nimport { cn } from \"@/lib/utils\"\n\ninterface LottieHoverPlayerProps {\n  src: string | object\n  className?: string\n  loop?: boolean\n}\n\nexport function LottieHoverPlayer({\n  src,\n  className,\n  loop = true,\n}: LottieHoverPlayerProps) {\n  const lottieRef = React.useRef<LottieHandle>(null)\n\n  return (\n    <div\n      className={cn(\"h-32 w-32\", className)}\n      onMouseEnter={() => lottieRef.current?.play()}\n      onMouseLeave={() => lottieRef.current?.stop()}\n    >\n      <Lottie\n        lottieRef={lottieRef}\n        src={src}\n        loop={loop}\n        autoplay={false}\n        className=\"h-full w-full\"\n      />\n    </div>\n  )\n}\n",
+      "type": "registry:ui",
+      "target": "@components/lottie/lottie-hover-player.tsx"
+    }
+  ],
+  "categories": [
+    "lottie"
+  ],
+  "type": "registry:ui"
+}

@@ -1,0 +1,22 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "particle-field-background",
+  "title": "Particle Field Background",
+  "description": "A slowly rotating field of points, useful as a hero/background layer, built with react-three-fiber.",
+  "dependencies": [
+    "three",
+    "@react-three/fiber"
+  ],
+  "files": [
+    {
+      "path": "registry/three/particle-field-background/particle-field-background.tsx",
+      "content": "\"use client\"\n\nimport * as React from \"react\"\nimport { Canvas, useFrame } from \"@react-three/fiber\"\nimport * as THREE from \"three\"\n\nimport { cn } from \"@/lib/utils\"\n\nfunction pseudoRandom(seed: number) {\n  const x = Math.sin(seed) * 10000\n  return x - Math.floor(x)\n}\n\nfunction Particles({ count = 800 }: { count?: number }) {\n  const pointsRef = React.useRef<THREE.Points>(null)\n\n  const positions = React.useMemo(() => {\n    const arr = new Float32Array(count * 3)\n    for (let i = 0; i < count; i++) {\n      arr[i * 3] = (pseudoRandom(i * 3 + 1) - 0.5) * 10\n      arr[i * 3 + 1] = (pseudoRandom(i * 3 + 2) - 0.5) * 10\n      arr[i * 3 + 2] = (pseudoRandom(i * 3 + 3) - 0.5) * 10\n    }\n    return arr\n  }, [count])\n\n  useFrame((_, delta) => {\n    if (pointsRef.current) {\n      pointsRef.current.rotation.y += delta * 0.05\n      pointsRef.current.rotation.x += delta * 0.02\n    }\n  })\n\n  return (\n    <points ref={pointsRef}>\n      <bufferGeometry>\n        <bufferAttribute attach=\"attributes-position\" args={[positions, 3]} />\n      </bufferGeometry>\n      <pointsMaterial\n        size={0.05}\n        color=\"#a5b4fc\"\n        sizeAttenuation\n        transparent\n        opacity={0.8}\n      />\n    </points>\n  )\n}\n\ninterface ParticleFieldBackgroundProps {\n  className?: string\n  count?: number\n}\n\nexport function ParticleFieldBackground({\n  className,\n  count = 800,\n}: ParticleFieldBackgroundProps) {\n  return (\n    <div className={cn(\"h-80 w-full bg-black\", className)}>\n      <Canvas camera={{ position: [0, 0, 5], fov: 60 }}>\n        <Particles count={count} />\n      </Canvas>\n    </div>\n  )\n}\n",
+      "type": "registry:ui",
+      "target": "@components/three/particle-field-background.tsx"
+    }
+  ],
+  "categories": [
+    "three"
+  ],
+  "type": "registry:ui"
+}

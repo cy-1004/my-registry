@@ -1,0 +1,24 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "modal-transition",
+  "title": "Modal Transition",
+  "description": "Animated dialog with fade/scale transitions via AnimatePresence, built on top of Animated Button.",
+  "dependencies": [
+    "motion"
+  ],
+  "registryDependencies": [
+    "http://localhost:3000/r/animated-button.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ui-animations/modal-transition/modal-transition.tsx",
+      "content": "\"use client\"\n\nimport * as React from \"react\"\nimport { AnimatePresence, motion } from \"motion/react\"\n\nimport { AnimatedButton } from \"@/registry/ui-animations/animated-button/animated-button\"\nimport { cn } from \"@/lib/utils\"\n\ninterface ModalTransitionProps {\n  triggerLabel?: string\n  title: string\n  description?: string\n  children?: React.ReactNode\n}\n\nexport function ModalTransition({\n  triggerLabel = \"Open modal\",\n  title,\n  description,\n  children,\n}: ModalTransitionProps) {\n  const [open, setOpen] = React.useState(false)\n\n  return (\n    <>\n      <AnimatedButton onClick={() => setOpen(true)}>\n        {triggerLabel}\n      </AnimatedButton>\n      <AnimatePresence>\n        {open && (\n          <motion.div\n            className=\"fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4\"\n            initial={{ opacity: 0 }}\n            animate={{ opacity: 1 }}\n            exit={{ opacity: 0 }}\n            onClick={() => setOpen(false)}\n          >\n            <motion.div\n              className={cn(\n                \"w-full max-w-md rounded-lg border bg-background p-6 shadow-lg\"\n              )}\n              initial={{ opacity: 0, scale: 0.95, y: 10 }}\n              animate={{ opacity: 1, scale: 1, y: 0 }}\n              exit={{ opacity: 0, scale: 0.95, y: 10 }}\n              transition={{ duration: 0.2, ease: [0.22, 1, 0.36, 1] }}\n              onClick={(event) => event.stopPropagation()}\n            >\n              <h2 className=\"text-lg font-semibold\">{title}</h2>\n              {description && (\n                <p className=\"mt-2 text-sm text-muted-foreground\">\n                  {description}\n                </p>\n              )}\n              {children}\n              <div className=\"mt-6 flex justify-end\">\n                <button\n                  onClick={() => setOpen(false)}\n                  className=\"text-sm font-medium text-muted-foreground hover:text-foreground\"\n                >\n                  Close\n                </button>\n              </div>\n            </motion.div>\n          </motion.div>\n        )}\n      </AnimatePresence>\n    </>\n  )\n}\n",
+      "type": "registry:ui",
+      "target": "@components/ui-animations/modal-transition.tsx"
+    }
+  ],
+  "categories": [
+    "ui-animations"
+  ],
+  "type": "registry:ui"
+}

@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "hello-world",
+  "title": "Hello World",
+  "description": "Minimal internal test item used to verify the build/install pipeline for a non-registry:ui item type.",
+  "files": [
+    {
+      "path": "registry/_internal/hello-world/hello-world.tsx",
+      "content": "export function HelloWorld() {\n  return (\n    <p className=\"text-sm text-muted-foreground\">\n      Hello from the registry build pipeline.\n    </p>\n  )\n}\n",
+      "type": "registry:component",
+      "target": "@components/internal/hello-world.tsx"
+    }
+  ],
+  "categories": [
+    "internal"
+  ],
+  "type": "registry:component"
+}
