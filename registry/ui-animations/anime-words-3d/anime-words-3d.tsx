@@ -2,7 +2,7 @@
 
 import * as React from "react"
 import { animate, splitText, stagger } from "animejs"
-import type { TextSplitter } from "animejs"
+import type { JSAnimation, TextSplitter } from "animejs"
 
 import { cn } from "@/lib/utils"
 
@@ -23,6 +23,7 @@ interface AnimeWords3DProps {
   staggerBy?: number
   /** Order the stagger walks through the words. */
   from?: "first" | "last" | "center" | "random"
+  /** Applied to a wrapper so the block's own tilt is seen in perspective. */
   perspective?: string
 }
 
@@ -37,31 +38,32 @@ export function AnimeWords3D({
   duration = 750,
   staggerBy = 40,
   from = "random",
-  perspective = "1000px",
+  perspective = "600px",
 }: AnimeWords3DProps) {
   const containerRef = React.useRef<HTMLParagraphElement>(null)
-  const splitRef = React.useRef<TextSplitter | null>(null)
-  const [ready, setReady] = React.useState(false)
+  const animationsRef = React.useRef<JSAnimation[]>([])
+  const [split, setSplit] = React.useState<TextSplitter | null>(null)
 
   React.useEffect(() => {
     const element = containerRef.current
     if (!element) return
 
     // Kept whole: revert() is a method on the splitter and needs its `this`.
-    const split = splitText(element, { words: true, chars: false })
-    splitRef.current = split
-    setReady(true)
+    const nextSplit = splitText(element, { words: true, chars: false })
+    setSplit(nextSplit)
 
     return () => {
-      split.revert()
-      splitRef.current = null
+      // Only reset styles when the words themselves go away (new text or
+      // unmount); toggling hands off from wherever the last animation paused.
+      animationsRef.current.forEach((animation) => animation.revert())
+      animationsRef.current = []
+      nextSplit.revert()
     }
   }, [children])
 
   React.useEffect(() => {
     const element = containerRef.current
-    const split = splitRef.current
-    if (!element || !split || !ready) return
+    if (!element || !split) return
 
     const blockAnimation = animate(element, {
       rotateY: expanded ? rotateY : 0,
@@ -78,12 +80,16 @@ export function AnimeWords3D({
       delay: stagger(staggerBy, { from }),
     })
 
+    animationsRef.current = [blockAnimation, wordAnimation]
+
     return () => {
-      blockAnimation.revert()
-      wordAnimation.revert()
+      // Pause instead of revert so the next animation starts from the
+      // current values rather than snapping back to the initial state.
+      blockAnimation.pause()
+      wordAnimation.pause()
     }
   }, [
-    ready,
+    split,
     expanded,
     distance,
     rotateY,
@@ -95,12 +101,13 @@ export function AnimeWords3D({
   ])
 
   return (
-    <p
-      ref={containerRef}
-      className={cn("[transform-style:preserve-3d]", className)}
-      style={{ perspective }}
-    >
-      {children}
-    </p>
+    <div style={{ perspective }}>
+      <p
+        ref={containerRef}
+        className={cn("[transform-style:preserve-3d]", className)}
+      >
+        {children}
+      </p>
+    </div>
   )
 }
