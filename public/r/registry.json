@@ -636,6 +636,46 @@
           "target": "@components/ui-animations/anime-char-flip.tsx"
         }
       ]
+    },
+    {
+      "name": "anime-three-spheres",
+      "type": "registry:ui",
+      "title": "Anime Three Spheres",
+      "description": "Three shaded spheres with a vertex wave deformation, driven by anime.js through its Three.js adapter.",
+      "categories": [
+        "three"
+      ],
+      "dependencies": [
+        "animejs",
+        "three"
+      ],
+      "files": [
+        {
+          "path": "registry/three/anime-three-spheres/anime-three-spheres.tsx",
+          "type": "registry:ui",
+          "target": "@components/three/anime-three-spheres.tsx"
+        }
+      ]
+    },
+    {
+      "name": "anime-three-cube-grid",
+      "type": "registry:ui",
+      "title": "Anime Three Cube Grid",
+      "description": "An instanced cube grid that explodes outward and rotates, driven by anime.js through its Three.js adapter.",
+      "categories": [
+        "three"
+      ],
+      "dependencies": [
+        "animejs",
+        "three"
+      ],
+      "files": [
+        {
+          "path": "registry/three/anime-three-cube-grid/anime-three-cube-grid.tsx",
+          "type": "registry:ui",
+          "target": "@components/three/anime-three-cube-grid.tsx"
+        }
+      ]
     }
   ]
 }

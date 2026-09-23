@@ -69,8 +69,11 @@ export function Spotlight({
     <motion.div
       ref={containerRef}
       className={cn(
-        "pointer-events-none absolute rounded-full bg-[radial-gradient(circle_at_center,var(--tw-gradient-stops),transparent_80%)] blur-xl transition-opacity duration-200",
-        "from-zinc-100 via-zinc-200 to-zinc-400 dark:from-zinc-50 dark:via-zinc-100 dark:to-zinc-200",
+        // Tailwind v4 gradient utility: the original's
+        // `bg-[radial-gradient(…var(--tw-gradient-stops)…)]` is a v3 form and
+        // resolves to no background here.
+        "pointer-events-none absolute rounded-full bg-radial blur-xl transition-opacity duration-200",
+        "from-zinc-400 via-zinc-300 to-transparent dark:from-zinc-100 dark:via-zinc-200",
         isHovered ? "opacity-100" : "opacity-0",
         className
       )}

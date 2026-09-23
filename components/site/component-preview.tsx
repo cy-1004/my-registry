@@ -134,6 +134,14 @@ const DEMOS: Record<string, React.ComponentType> = {
     () => import("@/registry/ui-animations/anime-char-flip/demo"),
     { ssr: false }
   ),
+  "anime-three-spheres": dynamic(
+    () => import("@/registry/three/anime-three-spheres/demo"),
+    { ssr: false }
+  ),
+  "anime-three-cube-grid": dynamic(
+    () => import("@/registry/three/anime-three-cube-grid/demo"),
+    { ssr: false }
+  ),
 }
 
 interface ComponentPreviewProps {

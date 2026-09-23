@@ -7,8 +7,8 @@ export default function SpotlightDemo() {
     <div className="flex flex-wrap items-center justify-center gap-6 p-10">
       <div className="relative aspect-video h-[200px] rounded-sm border bg-background">
         <Spotlight
-          className="from-blue-800 via-blue-600 to-blue-400 blur-xl"
-          size={64}
+          className="from-blue-500 via-blue-400 to-transparent blur-xl"
+          size={96}
         />
         <div className="absolute inset-0">
           <svg className="h-full w-full">
@@ -43,8 +43,8 @@ export default function SpotlightDemo() {
 
       <div className="relative aspect-video h-[200px] overflow-hidden rounded-xl bg-muted p-px">
         <Spotlight
-          className="from-blue-600 via-blue-500 to-blue-400 blur-3xl"
-          size={124}
+          className="from-blue-500 via-blue-400 to-transparent blur-3xl"
+          size={160}
         />
         <div className="relative h-full w-full rounded-xl bg-background" />
       </div>
