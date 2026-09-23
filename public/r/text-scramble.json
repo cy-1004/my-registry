@@ -1,0 +1,21 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "text-scramble",
+  "title": "Text Scramble",
+  "description": "Scrambles through random characters before settling on the final text.",
+  "dependencies": [
+    "motion"
+  ],
+  "files": [
+    {
+      "path": "registry/ui-animations/text-scramble/text-scramble.tsx",
+      "content": "\"use client\"\n\n// Adapted from motion-primitives (MIT) — https://motion-primitives.com\n\nimport * as React from \"react\"\nimport { motion, type MotionProps } from \"motion/react\"\n\nexport type TextScrambleProps = {\n  children: string\n  duration?: number\n  speed?: number\n  characterSet?: string\n  as?: TextScrambleTag\n  className?: string\n  trigger?: boolean\n  onScrambleComplete?: () => void\n} & MotionProps\n\nconst defaultChars =\n  \"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789\"\n\n// Created once at module scope: components built during render would lose\n// their identity (and state) on every re-render.\nconst MOTION_TAGS = {\n  p: motion.p,\n  span: motion.span,\n  div: motion.div,\n  h1: motion.h1,\n  h2: motion.h2,\n  h3: motion.h3,\n} as const\n\nexport type TextScrambleTag = keyof typeof MOTION_TAGS\n\nexport function TextScramble({\n  children,\n  duration = 0.8,\n  speed = 0.04,\n  characterSet = defaultChars,\n  className,\n  as = \"p\",\n  trigger = true,\n  onScrambleComplete,\n  ...props\n}: TextScrambleProps) {\n  const MotionComponent = MOTION_TAGS[as]\n  const [scrambledText, setScrambledText] = React.useState<string | null>(null)\n  const text = children\n  const displayText = scrambledText ?? children\n\n  // Held in a ref so an inline callback does not restart the animation on\n  // every render of the parent.\n  const onCompleteRef = React.useRef(onScrambleComplete)\n  React.useEffect(() => {\n    onCompleteRef.current = onScrambleComplete\n  }, [onScrambleComplete])\n\n  React.useEffect(() => {\n    if (!trigger) return\n\n    const steps = duration / speed\n    let step = 0\n\n    const interval = setInterval(() => {\n      let scrambled = \"\"\n      const progress = step / steps\n\n      for (let i = 0; i < text.length; i++) {\n        if (text[i] === \" \") {\n          scrambled += \" \"\n          continue\n        }\n\n        if (progress * text.length > i) {\n          scrambled += text[i]\n        } else {\n          scrambled +=\n            characterSet[Math.floor(Math.random() * characterSet.length)]\n        }\n      }\n\n      setScrambledText(scrambled)\n      step++\n\n      if (step > steps) {\n        clearInterval(interval)\n        setScrambledText(null)\n        onCompleteRef.current?.()\n      }\n    }, speed * 1000)\n\n    return () => clearInterval(interval)\n  }, [trigger, text, duration, speed, characterSet])\n\n  return (\n    <MotionComponent className={className} {...props}>\n      {displayText}\n    </MotionComponent>\n  )\n}\n",
+      "type": "registry:ui",
+      "target": "@components/ui-animations/text-scramble.tsx"
+    }
+  ],
+  "categories": [
+    "ui-animations"
+  ],
+  "type": "registry:ui"
+}

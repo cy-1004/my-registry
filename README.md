@@ -22,7 +22,7 @@ Then pick whichever of these fits:
 Register this registry in the target project a single time:
 
 ```bash
-npx shadcn@latest registry add '@my-registry=https://REGISTRY_URL/r/{name}.json'
+npx shadcn@latest registry add '@my-registry=https://my-registry-cylll.vercel.app/r/{name}.json'
 ```
 
 After that, install by short name:
@@ -34,7 +34,7 @@ npx shadcn@latest add @my-registry/animated-button
 ### 2. Full URL (no setup)
 
 ```bash
-npx shadcn@latest add https://REGISTRY_URL/r/animated-button.json
+npx shadcn@latest add https://my-registry-cylll.vercel.app/r/animated-button.json
 ```
 
 ### 3. Local relative path (no server, no deployment)

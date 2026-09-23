@@ -1,0 +1,21 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "spotlight",
+  "title": "Spotlight",
+  "description": "A soft light that follows the cursor inside its parent container.",
+  "dependencies": [
+    "motion"
+  ],
+  "files": [
+    {
+      "path": "registry/ui-animations/spotlight/spotlight.tsx",
+      "content": "\"use client\"\n\n// Adapted from motion-primitives (MIT) — https://motion-primitives.com\n\nimport * as React from \"react\"\nimport { motion, useSpring, useTransform, type SpringOptions } from \"motion/react\"\n\nimport { cn } from \"@/lib/utils\"\n\nexport type SpotlightProps = {\n  className?: string\n  size?: number\n  springOptions?: SpringOptions\n}\n\nexport function Spotlight({\n  className,\n  size = 200,\n  springOptions = { bounce: 0 },\n}: SpotlightProps) {\n  const [isHovered, setIsHovered] = React.useState(false)\n  const [parentElement, setParentElement] = React.useState<HTMLElement | null>(\n    null\n  )\n\n  const mouseX = useSpring(0, springOptions)\n  const mouseY = useSpring(0, springOptions)\n\n  const spotlightLeft = useTransform(mouseX, (x) => `${x - size / 2}px`)\n  const spotlightTop = useTransform(mouseY, (y) => `${y - size / 2}px`)\n\n  // A callback ref rather than an effect: the parent is only knowable once the\n  // node is attached, and this keeps the parent's positioning set up in commit.\n  const containerRef = React.useCallback((node: HTMLDivElement | null) => {\n    const parent = node?.parentElement ?? null\n    if (parent) {\n      parent.style.position = \"relative\"\n      parent.style.overflow = \"hidden\"\n    }\n    setParentElement(parent)\n  }, [])\n\n  React.useEffect(() => {\n    if (!parentElement) return\n\n    const abortController = new AbortController()\n    const { signal } = abortController\n\n    parentElement.addEventListener(\n      \"mousemove\",\n      (event: MouseEvent) => {\n        const { left, top } = parentElement.getBoundingClientRect()\n        mouseX.set(event.clientX - left)\n        mouseY.set(event.clientY - top)\n      },\n      { signal }\n    )\n    parentElement.addEventListener(\"mouseenter\", () => setIsHovered(true), {\n      signal,\n    })\n    parentElement.addEventListener(\"mouseleave\", () => setIsHovered(false), {\n      signal,\n    })\n\n    return () => abortController.abort()\n  }, [parentElement, mouseX, mouseY])\n\n  return (\n    <motion.div\n      ref={containerRef}\n      className={cn(\n        \"pointer-events-none absolute rounded-full bg-[radial-gradient(circle_at_center,var(--tw-gradient-stops),transparent_80%)] blur-xl transition-opacity duration-200\",\n        \"from-zinc-100 via-zinc-200 to-zinc-400 dark:from-zinc-50 dark:via-zinc-100 dark:to-zinc-200\",\n        isHovered ? \"opacity-100\" : \"opacity-0\",\n        className\n      )}\n      style={{\n        width: size,\n        height: size,\n        left: spotlightLeft,\n        top: spotlightTop,\n      }}\n    />\n  )\n}\n",
+      "type": "registry:ui",
+      "target": "@components/ui-animations/spotlight.tsx"
+    }
+  ],
+  "categories": [
+    "ui-animations"
+  ],
+  "type": "registry:ui"
+}

@@ -1,0 +1,21 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "gsap-scramble-text",
+  "title": "GSAP Scramble Text",
+  "description": "Text that scrambles through characters, numbers, or case variants before resolving, using GSAP's ScrambleTextPlugin.",
+  "dependencies": [
+    "gsap"
+  ],
+  "files": [
+    {
+      "path": "registry/scroll/gsap-scramble-text/gsap-scramble-text.tsx",
+      "content": "\"use client\"\n\nimport * as React from \"react\"\nimport gsap from \"gsap\"\nimport { ScrambleTextPlugin } from \"gsap/ScrambleTextPlugin\"\n\nimport { cn } from \"@/lib/utils\"\n\nif (typeof window !== \"undefined\") {\n  gsap.registerPlugin(ScrambleTextPlugin)\n}\n\nexport type ScrambleSegment = {\n  text: string\n  /** A character set, or the keywords \"lowerCase\" / \"upperCase\". */\n  chars?: string\n  speed?: number\n  duration?: number\n}\n\ninterface GsapScrambleTextProps {\n  segments: ScrambleSegment[]\n  className?: string\n  showCursor?: boolean\n  replayOnClick?: boolean\n}\n\nexport function GsapScrambleText({\n  segments,\n  className,\n  showCursor = true,\n  replayOnClick = true,\n}: GsapScrambleTextProps) {\n  const containerRef = React.useRef<HTMLParagraphElement>(null)\n  const spanRefs = React.useRef<(HTMLSpanElement | null)[]>([])\n  const cursorRef = React.useRef<HTMLSpanElement>(null)\n  const timelineRef = React.useRef<gsap.core.Timeline | null>(null)\n\n  // Compared by content so an inline `segments` array does not restart the\n  // animation on every render of the parent.\n  const segmentsKey = JSON.stringify(segments)\n\n  React.useEffect(() => {\n    const ctx = gsap.context(() => {\n      const tl = gsap.timeline({ defaults: { ease: \"none\" } })\n\n      segments.forEach((segment, index) => {\n        const element = spanRefs.current[index]\n        if (!element) return\n\n        tl.to(element, {\n          scrambleText: {\n            text: segment.text,\n            chars: segment.chars ?? \"lowerCase\",\n            speed: segment.speed,\n          },\n          duration: segment.duration ?? 2,\n        })\n      })\n\n      if (cursorRef.current) {\n        const cursorTl = gsap.timeline({ repeat: -1 })\n        cursorTl\n          .to(cursorRef.current, { opacity: 0, duration: 0.5, delay: 0.2 })\n          .to(cursorRef.current, { opacity: 1, duration: 0.5, delay: 0.2 })\n        tl.add(cursorTl)\n      }\n\n      timelineRef.current = tl\n    }, containerRef)\n\n    return () => ctx.revert()\n    // eslint-disable-next-line react-hooks/exhaustive-deps\n  }, [segmentsKey])\n\n  return (\n    <p\n      ref={containerRef}\n      className={cn(className, replayOnClick && \"cursor-pointer\")}\n      onClick={\n        replayOnClick ? () => timelineRef.current?.play(0) : undefined\n      }\n    >\n      <span className=\"sr-only\">\n        {segments.map((segment) => segment.text).join(\" \")}\n      </span>\n      <span aria-hidden=\"true\">\n        {segments.map((segment, index) => (\n          <React.Fragment key={index}>\n            {/* JSX renders adjacent elements with no whitespace, so the gap\n                between segments has to be explicit. */}\n            {index > 0 ? \" \" : null}\n            <span\n              ref={(node) => {\n                spanRefs.current[index] = node\n              }}\n            />\n          </React.Fragment>\n        ))}\n        {showCursor && (\n          <span ref={cursorRef} className=\"ml-0.5 inline-block\">\n            ▍\n          </span>\n        )}\n      </span>\n    </p>\n  )\n}\n",
+      "type": "registry:ui",
+      "target": "@components/scroll/gsap-scramble-text.tsx"
+    }
+  ],
+  "categories": [
+    "scroll"
+  ],
+  "type": "registry:ui"
+}

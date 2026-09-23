@@ -1,0 +1,21 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "gsap-split-text",
+  "title": "GSAP Split Text",
+  "description": "Splits text into characters, words, or lines and staggers each piece in, using GSAP's SplitText.",
+  "dependencies": [
+    "gsap"
+  ],
+  "files": [
+    {
+      "path": "registry/scroll/gsap-split-text/gsap-split-text.tsx",
+      "content": "\"use client\"\n\nimport * as React from \"react\"\nimport gsap from \"gsap\"\nimport { SplitText } from \"gsap/SplitText\"\n\nimport { cn } from \"@/lib/utils\"\n\nif (typeof window !== \"undefined\") {\n  gsap.registerPlugin(SplitText)\n}\n\nexport type SplitMode = \"chars\" | \"words\" | \"lines\"\n\nexport type GsapSplitTextHandle = {\n  play: (mode: SplitMode) => void\n}\n\ninterface GsapSplitTextProps {\n  children: string\n  className?: string\n  /** Runs once on mount; omit to only animate on demand via the ref. */\n  initialMode?: SplitMode\n}\n\nconst PRESETS: Record<SplitMode, gsap.TweenVars> = {\n  chars: {\n    x: 150,\n    opacity: 0,\n    duration: 0.7,\n    ease: \"power4\",\n    stagger: 0.04,\n  },\n  words: {\n    y: -100,\n    opacity: 0,\n    rotation: \"random(-80, 80)\",\n    duration: 0.7,\n    ease: \"back\",\n    stagger: 0.15,\n  },\n  lines: {\n    rotationX: -100,\n    transformOrigin: \"50% 50% -160px\",\n    opacity: 0,\n    duration: 0.8,\n    ease: \"power3\",\n    stagger: 0.25,\n  },\n}\n\nexport const GsapSplitText = React.forwardRef<\n  GsapSplitTextHandle,\n  GsapSplitTextProps\n>(function GsapSplitText({ children, className, initialMode }, ref) {\n  const textRef = React.useRef<HTMLDivElement>(null)\n  const splitRef = React.useRef<SplitText | null>(null)\n  const animationRef = React.useRef<gsap.core.Tween | null>(null)\n\n  const play = React.useCallback((mode: SplitMode) => {\n    const split = splitRef.current\n    if (!split) return\n\n    animationRef.current?.revert()\n    animationRef.current = gsap.from(split[mode], PRESETS[mode])\n  }, [])\n\n  React.useImperativeHandle(ref, () => ({ play }), [play])\n\n  React.useEffect(() => {\n    const element = textRef.current\n    if (!element) return\n\n    const setup = () => {\n      splitRef.current?.revert()\n      animationRef.current?.revert()\n      splitRef.current = SplitText.create(element, {\n        type: \"chars,words,lines\",\n      })\n      if (initialMode) {\n        play(initialMode)\n      }\n    }\n\n    setup()\n    window.addEventListener(\"resize\", setup)\n\n    return () => {\n      window.removeEventListener(\"resize\", setup)\n      animationRef.current?.revert()\n      splitRef.current?.revert()\n    }\n  }, [children, initialMode, play])\n\n  return (\n    <div\n      ref={textRef}\n      className={cn(\"[perspective:500px]\", className)}\n    >\n      {children}\n    </div>\n  )\n})\n",
+      "type": "registry:ui",
+      "target": "@components/scroll/gsap-split-text.tsx"
+    }
+  ],
+  "categories": [
+    "scroll"
+  ],
+  "type": "registry:ui"
+}

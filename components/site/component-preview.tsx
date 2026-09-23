@@ -46,6 +46,70 @@ const DEMOS: Record<string, React.ComponentType> = {
     () => import("@/registry/scroll/gsap-tween-methods/demo"),
     { ssr: false }
   ),
+  "animated-background": dynamic(
+    () => import("@/registry/ui-animations/animated-background/demo"),
+    { ssr: false }
+  ),
+  "text-effect": dynamic(
+    () => import("@/registry/ui-animations/text-effect/demo"),
+    { ssr: false }
+  ),
+  "text-scramble": dynamic(
+    () => import("@/registry/ui-animations/text-scramble/demo"),
+    { ssr: false }
+  ),
+  "text-shimmer": dynamic(
+    () => import("@/registry/ui-animations/text-shimmer/demo"),
+    { ssr: false }
+  ),
+  "text-shimmer-wave": dynamic(
+    () => import("@/registry/ui-animations/text-shimmer-wave/demo"),
+    { ssr: false }
+  ),
+  "sliding-number": dynamic(
+    () => import("@/registry/ui-animations/sliding-number/demo"),
+    { ssr: false }
+  ),
+  "dock": dynamic(
+    () => import("@/registry/ui-animations/dock/demo"),
+    { ssr: false }
+  ),
+  "text-morph": dynamic(
+    () => import("@/registry/ui-animations/text-morph/demo"),
+    { ssr: false }
+  ),
+  "glow-effect": dynamic(
+    () => import("@/registry/ui-animations/glow-effect/demo"),
+    { ssr: false }
+  ),
+  "spotlight": dynamic(
+    () => import("@/registry/ui-animations/spotlight/demo"),
+    { ssr: false }
+  ),
+  "magnetic": dynamic(
+    () => import("@/registry/ui-animations/magnetic/demo"),
+    { ssr: false }
+  ),
+  "morphing-dialog": dynamic(
+    () => import("@/registry/ui-animations/morphing-dialog/demo"),
+    { ssr: false }
+  ),
+  "progressive-blur": dynamic(
+    () => import("@/registry/ui-animations/progressive-blur/demo"),
+    { ssr: false }
+  ),
+  "gsap-scramble-text": dynamic(
+    () => import("@/registry/scroll/gsap-scramble-text/demo"),
+    { ssr: false }
+  ),
+  "gsap-morph-svg": dynamic(
+    () => import("@/registry/scroll/gsap-morph-svg/demo"),
+    { ssr: false }
+  ),
+  "gsap-split-text": dynamic(
+    () => import("@/registry/scroll/gsap-split-text/demo"),
+    { ssr: false }
+  ),
 }
 
 interface ComponentPreviewProps {

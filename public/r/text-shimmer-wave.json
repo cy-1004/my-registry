@@ -1,0 +1,21 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "text-shimmer-wave",
+  "title": "Text Shimmer Wave",
+  "description": "Per-character 3D wave with a colour sweep travelling through the text.",
+  "dependencies": [
+    "motion"
+  ],
+  "files": [
+    {
+      "path": "registry/ui-animations/text-shimmer-wave/text-shimmer-wave.tsx",
+      "content": "\"use client\"\n\n// Adapted from motion-primitives (MIT) — https://motion-primitives.com\n\nimport * as React from \"react\"\nimport { motion, type Transition } from \"motion/react\"\n\nimport { cn } from \"@/lib/utils\"\n\n// Created once at module scope: components built during render would lose\n// their identity (and state) on every re-render.\nconst MOTION_TAGS = {\n  p: motion.p,\n  span: motion.span,\n  div: motion.div,\n  h1: motion.h1,\n  h2: motion.h2,\n  h3: motion.h3,\n} as const\n\nexport type TextShimmerWaveTag = keyof typeof MOTION_TAGS\n\nexport type TextShimmerWaveProps = {\n  children: string\n  as?: TextShimmerWaveTag\n  className?: string\n  duration?: number\n  zDistance?: number\n  xDistance?: number\n  yDistance?: number\n  spread?: number\n  scaleDistance?: number\n  rotateYDistance?: number\n  transition?: Transition\n}\n\nexport function TextShimmerWave({\n  children,\n  as = \"p\",\n  className,\n  duration = 1,\n  zDistance = 10,\n  xDistance = 2,\n  yDistance = -2,\n  spread = 1,\n  scaleDistance = 1.1,\n  rotateYDistance = 10,\n  transition,\n}: TextShimmerWaveProps) {\n  const MotionComponent = MOTION_TAGS[as]\n\n  return (\n    <MotionComponent\n      className={cn(\n        \"relative inline-block [perspective:500px]\",\n        \"[--base-color:#a1a1aa] [--base-gradient-color:#000]\",\n        \"dark:[--base-color:#71717a] dark:[--base-gradient-color:#ffffff]\",\n        className\n      )}\n      style={{ color: \"var(--base-color)\" }}\n    >\n      {children.split(\"\").map((char, i) => {\n        const delay = (i * duration * (1 / spread)) / children.length\n\n        return (\n          <motion.span\n            key={i}\n            className={cn(\n              \"inline-block whitespace-pre [transform-style:preserve-3d]\"\n            )}\n            initial={{\n              translateZ: 0,\n              scale: 1,\n              rotateY: 0,\n              color: \"var(--base-color)\",\n            }}\n            animate={{\n              translateZ: [0, zDistance, 0],\n              translateX: [0, xDistance, 0],\n              translateY: [0, yDistance, 0],\n              scale: [1, scaleDistance, 1],\n              rotateY: [0, rotateYDistance, 0],\n              color: [\n                \"var(--base-color)\",\n                \"var(--base-gradient-color)\",\n                \"var(--base-color)\",\n              ],\n            }}\n            transition={{\n              duration: duration,\n              repeat: Infinity,\n              repeatDelay: (children.length * 0.05) / spread,\n              delay,\n              ease: \"easeInOut\",\n              ...transition,\n            }}\n          >\n            {char}\n          </motion.span>\n        )\n      })}\n    </MotionComponent>\n  )\n}\n",
+      "type": "registry:ui",
+      "target": "@components/ui-animations/text-shimmer-wave.tsx"
+    }
+  ],
+  "categories": [
+    "ui-animations"
+  ],
+  "type": "registry:ui"
+}

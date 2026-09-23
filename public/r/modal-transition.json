@@ -7,7 +7,7 @@
     "motion"
   ],
   "registryDependencies": [
-    "http://localhost:3000/r/animated-button.json"
+    "https://my-registry-cylll.vercel.app/r/animated-button.json"
   ],
   "files": [
     {

@@ -1,0 +1,21 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "animated-background",
+  "title": "Animated Background",
+  "description": "A shared highlight that slides between items on hover or click, powered by motion's layout animations.",
+  "dependencies": [
+    "motion"
+  ],
+  "files": [
+    {
+      "path": "registry/ui-animations/animated-background/animated-background.tsx",
+      "content": "\"use client\"\n\n// Adapted from motion-primitives (MIT) — https://motion-primitives.com\n\nimport * as React from \"react\"\nimport { AnimatePresence, motion, type Transition } from \"motion/react\"\n\nimport { cn } from \"@/lib/utils\"\n\ntype AnimatedBackgroundChildProps = {\n  \"data-id\": string\n  \"data-checked\"?: string\n  className?: string\n  children?: React.ReactNode\n  onClick?: () => void\n  onMouseEnter?: () => void\n  onMouseLeave?: () => void\n}\n\ntype AnimatedBackgroundChild =\n  React.ReactElement<AnimatedBackgroundChildProps>\n\ninterface AnimatedBackgroundProps {\n  children: AnimatedBackgroundChild[] | AnimatedBackgroundChild\n  defaultValue?: string\n  onValueChange?: (activeId: string | null) => void\n  className?: string\n  transition?: Transition\n  enableHover?: boolean\n}\n\nexport function AnimatedBackground({\n  children,\n  defaultValue,\n  onValueChange,\n  className,\n  transition,\n  enableHover = false,\n}: AnimatedBackgroundProps) {\n  const [activeId, setActiveId] = React.useState<string | null>(\n    defaultValue ?? null\n  )\n  const [lastDefaultValue, setLastDefaultValue] = React.useState(defaultValue)\n  const uniqueId = React.useId()\n\n  // Follow `defaultValue` when the parent changes it, adjusted during render\n  // rather than in an effect to avoid a cascading second render.\n  if (defaultValue !== lastDefaultValue) {\n    setLastDefaultValue(defaultValue)\n    setActiveId(defaultValue ?? null)\n  }\n\n  const handleSetActiveId = (id: string | null) => {\n    setActiveId(id)\n    onValueChange?.(id)\n  }\n\n  return React.Children.map(children, (child, index) => {\n    const id = child.props[\"data-id\"]\n\n    const interactionProps = enableHover\n      ? {\n          onMouseEnter: () => handleSetActiveId(id),\n          onMouseLeave: () => handleSetActiveId(null),\n        }\n      : {\n          onClick: () => handleSetActiveId(id),\n        }\n\n    return React.cloneElement(\n      child,\n      {\n        key: index,\n        className: cn(\"relative inline-flex\", child.props.className),\n        \"data-checked\": activeId === id ? \"true\" : \"false\",\n        ...interactionProps,\n      },\n      <>\n        <AnimatePresence initial={false}>\n          {activeId === id && (\n            <motion.div\n              layoutId={`background-${uniqueId}`}\n              className={cn(\"absolute inset-0\", className)}\n              transition={transition}\n              initial={{ opacity: defaultValue ? 1 : 0 }}\n              animate={{ opacity: 1 }}\n              exit={{ opacity: 0 }}\n            />\n          )}\n        </AnimatePresence>\n        <div className=\"z-10\">{child.props.children}</div>\n      </>\n    )\n  })\n}\n",
+      "type": "registry:ui",
+      "target": "@components/ui-animations/animated-background.tsx"
+    }
+  ],
+  "categories": [
+    "ui-animations"
+  ],
+  "type": "registry:ui"
+}

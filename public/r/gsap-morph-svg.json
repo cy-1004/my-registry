@@ -1,0 +1,21 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "gsap-morph-svg",
+  "title": "GSAP Morph SVG",
+  "description": "Morphs one SVG path into another with GSAP's MorphSVGPlugin.",
+  "dependencies": [
+    "gsap"
+  ],
+  "files": [
+    {
+      "path": "registry/scroll/gsap-morph-svg/gsap-morph-svg.tsx",
+      "content": "\"use client\"\n\nimport * as React from \"react\"\nimport gsap from \"gsap\"\nimport { MorphSVGPlugin } from \"gsap/MorphSVGPlugin\"\n\nimport { cn } from \"@/lib/utils\"\n\nif (typeof window !== \"undefined\") {\n  gsap.registerPlugin(MorphSVGPlugin)\n}\n\ninterface GsapMorphSvgProps {\n  /** Path data to cycle through. The first entry is the resting shape. */\n  paths: string[]\n  viewBox?: string\n  duration?: number\n  ease?: string\n  gradientFrom?: string\n  gradientTo?: string\n  className?: string\n}\n\nexport function GsapMorphSvg({\n  paths,\n  viewBox = \"0 0 100 100\",\n  duration = 2,\n  ease = \"expo.inOut\",\n  gradientFrom = \"rgb(255, 135, 9)\",\n  gradientTo = \"rgb(247, 189, 248)\",\n  className,\n}: GsapMorphSvgProps) {\n  const pathRef = React.useRef<SVGPathElement>(null)\n  // Scoped so several instances on one page do not share a gradient id.\n  const gradientId = React.useId().replace(/:/g, \"\")\n\n  // Compared by content so an inline `paths` array does not restart the\n  // animation on every render of the parent.\n  const pathsKey = JSON.stringify(paths)\n\n  React.useEffect(() => {\n    const path = pathRef.current\n    if (!path || paths.length < 2) return\n\n    const ctx = gsap.context(() => {\n      const tl = gsap.timeline({\n        defaults: { duration, ease },\n        repeat: -1,\n      })\n\n      paths.slice(1).forEach((shape) => {\n        tl.to(path, { morphSVG: shape })\n      })\n\n      tl.to(path, { morphSVG: paths[0] })\n    })\n\n    return () => ctx.revert()\n    // eslint-disable-next-line react-hooks/exhaustive-deps\n  }, [pathsKey, duration, ease])\n\n  return (\n    <svg\n      viewBox={viewBox}\n      fill=\"none\"\n      xmlns=\"http://www.w3.org/2000/svg\"\n      className={cn(\"overflow-visible\", className)}\n    >\n      <defs>\n        <linearGradient\n          id={gradientId}\n          x1=\"0\"\n          y1=\"0\"\n          x2=\"99\"\n          y2=\"99\"\n          gradientUnits=\"userSpaceOnUse\"\n        >\n          <stop offset=\"0.2\" stopColor={gradientFrom} />\n          <stop offset=\"0.7\" stopColor={gradientTo} />\n        </linearGradient>\n      </defs>\n      <path ref={pathRef} fill={`url(#${gradientId})`} d={paths[0]} />\n    </svg>\n  )\n}\n",
+      "type": "registry:ui",
+      "target": "@components/scroll/gsap-morph-svg.tsx"
+    }
+  ],
+  "categories": [
+    "scroll"
+  ],
+  "type": "registry:ui"
+}

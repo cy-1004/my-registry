@@ -1,7 +1,7 @@
 {
   "$schema": "https://ui.shadcn.com/schema/registry.json",
   "name": "my-registry",
-  "homepage": "http://localhost:3000",
+  "homepage": "https://my-registry-cylll.vercel.app",
   "items": [
     {
       "name": "animated-button",
@@ -53,7 +53,7 @@
         "motion"
       ],
       "registryDependencies": [
-        "http://localhost:3000/r/animated-button.json"
+        "https://my-registry-cylll.vercel.app/r/animated-button.json"
       ],
       "files": [
         {
@@ -215,6 +215,311 @@
           "path": "registry/scroll/gsap-tween-methods/gsap-tween-methods.tsx",
           "type": "registry:ui",
           "target": "@components/scroll/gsap-tween-methods.tsx"
+        }
+      ]
+    },
+    {
+      "name": "animated-background",
+      "type": "registry:ui",
+      "title": "Animated Background",
+      "description": "A shared highlight that slides between items on hover or click, powered by motion's layout animations.",
+      "categories": [
+        "ui-animations"
+      ],
+      "dependencies": [
+        "motion"
+      ],
+      "files": [
+        {
+          "path": "registry/ui-animations/animated-background/animated-background.tsx",
+          "type": "registry:ui",
+          "target": "@components/ui-animations/animated-background.tsx"
+        }
+      ]
+    },
+    {
+      "name": "text-effect",
+      "type": "registry:ui",
+      "title": "Text Effect",
+      "description": "Animates text in by character, word, or line with blur, fade, scale, and slide presets.",
+      "categories": [
+        "ui-animations"
+      ],
+      "dependencies": [
+        "motion"
+      ],
+      "files": [
+        {
+          "path": "registry/ui-animations/text-effect/text-effect.tsx",
+          "type": "registry:ui",
+          "target": "@components/ui-animations/text-effect.tsx"
+        }
+      ]
+    },
+    {
+      "name": "text-scramble",
+      "type": "registry:ui",
+      "title": "Text Scramble",
+      "description": "Scrambles through random characters before settling on the final text.",
+      "categories": [
+        "ui-animations"
+      ],
+      "dependencies": [
+        "motion"
+      ],
+      "files": [
+        {
+          "path": "registry/ui-animations/text-scramble/text-scramble.tsx",
+          "type": "registry:ui",
+          "target": "@components/ui-animations/text-scramble.tsx"
+        }
+      ]
+    },
+    {
+      "name": "text-shimmer",
+      "type": "registry:ui",
+      "title": "Text Shimmer",
+      "description": "A light sweep travelling across text, driven by an animated background gradient.",
+      "categories": [
+        "ui-animations"
+      ],
+      "dependencies": [
+        "motion"
+      ],
+      "files": [
+        {
+          "path": "registry/ui-animations/text-shimmer/text-shimmer.tsx",
+          "type": "registry:ui",
+          "target": "@components/ui-animations/text-shimmer.tsx"
+        }
+      ]
+    },
+    {
+      "name": "text-shimmer-wave",
+      "type": "registry:ui",
+      "title": "Text Shimmer Wave",
+      "description": "Per-character 3D wave with a colour sweep travelling through the text.",
+      "categories": [
+        "ui-animations"
+      ],
+      "dependencies": [
+        "motion"
+      ],
+      "files": [
+        {
+          "path": "registry/ui-animations/text-shimmer-wave/text-shimmer-wave.tsx",
+          "type": "registry:ui",
+          "target": "@components/ui-animations/text-shimmer-wave.tsx"
+        }
+      ]
+    },
+    {
+      "name": "sliding-number",
+      "type": "registry:ui",
+      "title": "Sliding Number",
+      "description": "Odometer-style number that slides each digit into place as the value changes.",
+      "categories": [
+        "ui-animations"
+      ],
+      "dependencies": [
+        "motion",
+        "react-use-measure"
+      ],
+      "files": [
+        {
+          "path": "registry/ui-animations/sliding-number/sliding-number.tsx",
+          "type": "registry:ui",
+          "target": "@components/ui-animations/sliding-number.tsx"
+        }
+      ]
+    },
+    {
+      "name": "dock",
+      "type": "registry:ui",
+      "title": "Dock",
+      "description": "macOS-style dock where icons magnify based on cursor proximity.",
+      "categories": [
+        "ui-animations"
+      ],
+      "dependencies": [
+        "motion"
+      ],
+      "files": [
+        {
+          "path": "registry/ui-animations/dock/dock.tsx",
+          "type": "registry:ui",
+          "target": "@components/ui-animations/dock.tsx"
+        }
+      ]
+    },
+    {
+      "name": "text-morph",
+      "type": "registry:ui",
+      "title": "Text Morph",
+      "description": "Morphs one string into another by animating shared characters between positions.",
+      "categories": [
+        "ui-animations"
+      ],
+      "dependencies": [
+        "motion"
+      ],
+      "files": [
+        {
+          "path": "registry/ui-animations/text-morph/text-morph.tsx",
+          "type": "registry:ui",
+          "target": "@components/ui-animations/text-morph.tsx"
+        }
+      ]
+    },
+    {
+      "name": "glow-effect",
+      "type": "registry:ui",
+      "title": "Glow Effect",
+      "description": "An animated gradient glow layer with rotate, pulse, breathe, and colour-shift modes.",
+      "categories": [
+        "ui-animations"
+      ],
+      "dependencies": [
+        "motion"
+      ],
+      "files": [
+        {
+          "path": "registry/ui-animations/glow-effect/glow-effect.tsx",
+          "type": "registry:ui",
+          "target": "@components/ui-animations/glow-effect.tsx"
+        }
+      ]
+    },
+    {
+      "name": "spotlight",
+      "type": "registry:ui",
+      "title": "Spotlight",
+      "description": "A soft light that follows the cursor inside its parent container.",
+      "categories": [
+        "ui-animations"
+      ],
+      "dependencies": [
+        "motion"
+      ],
+      "files": [
+        {
+          "path": "registry/ui-animations/spotlight/spotlight.tsx",
+          "type": "registry:ui",
+          "target": "@components/ui-animations/spotlight.tsx"
+        }
+      ]
+    },
+    {
+      "name": "magnetic",
+      "type": "registry:ui",
+      "title": "Magnetic",
+      "description": "Pulls its child toward the cursor within a configurable range.",
+      "categories": [
+        "ui-animations"
+      ],
+      "dependencies": [
+        "motion"
+      ],
+      "files": [
+        {
+          "path": "registry/ui-animations/magnetic/magnetic.tsx",
+          "type": "registry:ui",
+          "target": "@components/ui-animations/magnetic.tsx"
+        }
+      ]
+    },
+    {
+      "name": "morphing-dialog",
+      "type": "registry:ui",
+      "title": "Morphing Dialog",
+      "description": "A trigger that morphs into a full dialog using shared layout animations.",
+      "categories": [
+        "ui-animations"
+      ],
+      "dependencies": [
+        "motion"
+      ],
+      "files": [
+        {
+          "path": "registry/ui-animations/morphing-dialog/morphing-dialog.tsx",
+          "type": "registry:ui",
+          "target": "@components/ui-animations/morphing-dialog.tsx"
+        }
+      ]
+    },
+    {
+      "name": "progressive-blur",
+      "type": "registry:ui",
+      "title": "Progressive Blur",
+      "description": "A layered gradient-masked blur that fades in one direction, for overlaying media.",
+      "categories": [
+        "ui-animations"
+      ],
+      "dependencies": [
+        "motion"
+      ],
+      "files": [
+        {
+          "path": "registry/ui-animations/progressive-blur/progressive-blur.tsx",
+          "type": "registry:ui",
+          "target": "@components/ui-animations/progressive-blur.tsx"
+        }
+      ]
+    },
+    {
+      "name": "gsap-scramble-text",
+      "type": "registry:ui",
+      "title": "GSAP Scramble Text",
+      "description": "Text that scrambles through characters, numbers, or case variants before resolving, using GSAP's ScrambleTextPlugin.",
+      "categories": [
+        "scroll"
+      ],
+      "dependencies": [
+        "gsap"
+      ],
+      "files": [
+        {
+          "path": "registry/scroll/gsap-scramble-text/gsap-scramble-text.tsx",
+          "type": "registry:ui",
+          "target": "@components/scroll/gsap-scramble-text.tsx"
+        }
+      ]
+    },
+    {
+      "name": "gsap-morph-svg",
+      "type": "registry:ui",
+      "title": "GSAP Morph SVG",
+      "description": "Morphs one SVG path into another with GSAP's MorphSVGPlugin.",
+      "categories": [
+        "scroll"
+      ],
+      "dependencies": [
+        "gsap"
+      ],
+      "files": [
+        {
+          "path": "registry/scroll/gsap-morph-svg/gsap-morph-svg.tsx",
+          "type": "registry:ui",
+          "target": "@components/scroll/gsap-morph-svg.tsx"
+        }
+      ]
+    },
+    {
+      "name": "gsap-split-text",
+      "type": "registry:ui",
+      "title": "GSAP Split Text",
+      "description": "Splits text into characters, words, or lines and staggers each piece in, using GSAP's SplitText.",
+      "categories": [
+        "scroll"
+      ],
+      "dependencies": [
+        "gsap"
+      ],
+      "files": [
+        {
+          "path": "registry/scroll/gsap-split-text/gsap-split-text.tsx",
+          "type": "registry:ui",
+          "target": "@components/scroll/gsap-split-text.tsx"
         }
       ]
     }
