@@ -9,7 +9,7 @@ import { fileURLToPath } from "node:url"
 
 const ROOT = path.dirname(path.dirname(fileURLToPath(import.meta.url)))
 
-const CATEGORIES = ["ui-animations", "scroll", "lottie", "three"]
+const CATEGORIES = ["ui-animations", "scroll", "lottie", "three", "ai"]
 
 const [, , category, name, title, description, ...deps] = process.argv
 

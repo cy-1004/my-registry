@@ -1,0 +1,21 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "thinking-block",
+  "title": "Thinking Block",
+  "description": "A collapsible 'thinking' panel with a blinking live state, for streaming model output.",
+  "dependencies": [
+    "motion"
+  ],
+  "files": [
+    {
+      "path": "registry/ai/thinking-block/thinking-block.tsx",
+      "content": "\"use client\"\n\nimport * as React from \"react\"\nimport { AnimatePresence, motion } from \"motion/react\"\nimport { ChevronDown, Sparkles } from \"lucide-react\"\n\nimport { cn } from \"@/lib/utils\"\n\ninterface ThinkingBlockProps {\n  title: string\n  children: React.ReactNode\n  /** Shows the running state: a spinning icon and a blinking title. */\n  loading?: boolean\n  /** Adds the blinking caret at the end of the title. */\n  blink?: boolean\n  icon?: React.ReactNode\n  defaultOpen?: boolean\n  className?: string\n}\n\nexport function ThinkingBlock({\n  title,\n  children,\n  loading = false,\n  blink = false,\n  icon,\n  defaultOpen = true,\n  className,\n}: ThinkingBlockProps) {\n  const [open, setOpen] = React.useState(defaultOpen)\n\n  return (\n    <div className={cn(\"w-full rounded-lg border bg-card\", className)}>\n      <button\n        type=\"button\"\n        onClick={() => setOpen((value) => !value)}\n        aria-expanded={open}\n        className=\"flex w-full items-center gap-2 px-3 py-2 text-left text-sm\"\n      >\n        <span\n          className={cn(\n            \"flex size-4 shrink-0 items-center justify-center text-muted-foreground\",\n            loading && \"animate-spin\"\n          )}\n        >\n          {icon ?? <Sparkles className=\"size-4\" />}\n        </span>\n\n        <span\n          className={cn(\n            \"flex-1 font-medium\",\n            loading && \"animate-pulse text-muted-foreground\"\n          )}\n        >\n          {title}\n          {blink && (\n            <motion.span\n              aria-hidden=\"true\"\n              className=\"ml-1 inline-block h-3.5 w-[2px] translate-y-0.5 bg-current\"\n              animate={{ opacity: [1, 0, 1] }}\n              transition={{ duration: 1, repeat: Infinity, ease: \"linear\" }}\n            />\n          )}\n        </span>\n\n        <ChevronDown\n          className={cn(\n            \"size-4 shrink-0 text-muted-foreground transition-transform\",\n            open && \"rotate-180\"\n          )}\n        />\n      </button>\n\n      <AnimatePresence initial={false}>\n        {open && (\n          <motion.div\n            initial={{ height: 0, opacity: 0 }}\n            animate={{ height: \"auto\", opacity: 1 }}\n            exit={{ height: 0, opacity: 0 }}\n            transition={{ duration: 0.2, ease: [0.22, 1, 0.36, 1] }}\n            className=\"overflow-hidden\"\n          >\n            <div className=\"border-t px-3 py-2 text-sm text-muted-foreground\">\n              {children}\n            </div>\n          </motion.div>\n        )}\n      </AnimatePresence>\n    </div>\n  )\n}\n",
+      "type": "registry:ui",
+      "target": "@components/ai/thinking-block.tsx"
+    }
+  ],
+  "categories": [
+    "ai"
+  ],
+  "type": "registry:ui"
+}

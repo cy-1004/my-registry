@@ -22,6 +22,7 @@ export const CATEGORIES = [
   { slug: "scroll", label: "Scroll & Timeline" },
   { slug: "lottie", label: "Lottie" },
   { slug: "three", label: "3D / Three.js" },
+  { slug: "ai", label: "AI Interface" },
 ] as const
 
 export type CategorySlug = (typeof CATEGORIES)[number]["slug"]

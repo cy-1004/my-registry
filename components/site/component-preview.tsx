@@ -110,6 +110,30 @@ const DEMOS: Record<string, React.ComponentType> = {
     () => import("@/registry/scroll/gsap-split-text/demo"),
     { ssr: false }
   ),
+  "thinking-block": dynamic(
+    () => import("@/registry/ai/thinking-block/demo"),
+    { ssr: false }
+  ),
+  "thought-chain": dynamic(
+    () => import("@/registry/ai/thought-chain/demo"),
+    { ssr: false }
+  ),
+  "anime-text-bounce": dynamic(
+    () => import("@/registry/ui-animations/anime-text-bounce/demo"),
+    { ssr: false }
+  ),
+  "anime-svg-distort": dynamic(
+    () => import("@/registry/ui-animations/anime-svg-distort/demo"),
+    { ssr: false }
+  ),
+  "anime-line-draw": dynamic(
+    () => import("@/registry/ui-animations/anime-line-draw/demo"),
+    { ssr: false }
+  ),
+  "anime-char-flip": dynamic(
+    () => import("@/registry/ui-animations/anime-char-flip/demo"),
+    { ssr: false }
+  ),
 }
 
 interface ComponentPreviewProps {

@@ -1,0 +1,21 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "anime-svg-distort",
+  "title": "Anime SVG Distort",
+  "description": "Animated SVG turbulence filter and polygon point morphing, built with anime.js.",
+  "dependencies": [
+    "animejs"
+  ],
+  "files": [
+    {
+      "path": "registry/ui-animations/anime-svg-distort/anime-svg-distort.tsx",
+      "content": "\"use client\"\n\nimport * as React from \"react\"\nimport { animate } from \"animejs\"\n\nimport { cn } from \"@/lib/utils\"\n\nconst STAR =\n  \"64,4 78.1,44.6 121.1,45.5 86.8,71.4 99.3,112.5 64,88 28.7,112.5 41.2,71.4 6.9,45.5 49.9,44.6\"\nconst STAR_COLLAPSED =\n  \"64,24 78.1,44.6 102,51.6 86.8,71.4 87.5,96.4 64,88 40.5,96.4 41.2,71.4 26,51.6 49.9,44.6\"\n\ninterface AnimeSvgDistortProps {\n  className?: string\n  fill?: string\n}\n\nexport function AnimeSvgDistort({\n  className,\n  fill = \"currentColor\",\n}: AnimeSvgDistortProps) {\n  const svgRef = React.useRef<SVGSVGElement>(null)\n  // Scoped so several instances on one page do not share a filter id.\n  const filterId = React.useId().replace(/:/g, \"\")\n\n  React.useEffect(() => {\n    const svg = svgRef.current\n    if (!svg) return\n\n    const turbulence = svg.querySelectorAll(\"feTurbulence, feDisplacementMap\")\n    const polygon = svg.querySelector(\"polygon\")\n    if (!polygon) return\n\n    const distortion = animate(turbulence, {\n      baseFrequency: 0.05,\n      scale: 15,\n      alternate: true,\n      loop: true,\n    })\n\n    const morph = animate(polygon, {\n      points: STAR_COLLAPSED,\n      alternate: true,\n      loop: true,\n    })\n\n    return () => {\n      distortion.revert()\n      morph.revert()\n    }\n  }, [])\n\n  return (\n    <svg\n      ref={svgRef}\n      viewBox=\"0 0 128 128\"\n      className={cn(className)}\n      xmlns=\"http://www.w3.org/2000/svg\"\n    >\n      <defs>\n        <filter id={filterId}>\n          <feTurbulence\n            type=\"fractalNoise\"\n            baseFrequency=\"0\"\n            numOctaves=\"3\"\n            result=\"noise\"\n          />\n          <feDisplacementMap in=\"SourceGraphic\" in2=\"noise\" scale=\"0\" />\n        </filter>\n      </defs>\n      <polygon\n        points={STAR}\n        fill={fill}\n        filter={`url(#${filterId})`}\n      />\n    </svg>\n  )\n}\n",
+      "type": "registry:ui",
+      "target": "@components/ui-animations/anime-svg-distort.tsx"
+    }
+  ],
+  "categories": [
+    "ui-animations"
+  ],
+  "type": "registry:ui"
+}

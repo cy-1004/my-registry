@@ -1,0 +1,21 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "anime-char-flip",
+  "title": "Anime Char Flip",
+  "description": "Characters flip on a 3D cube face-by-face, built with anime.js splitText templates.",
+  "dependencies": [
+    "animejs"
+  ],
+  "files": [
+    {
+      "path": "registry/ui-animations/anime-char-flip/anime-char-flip.tsx",
+      "content": "\"use client\"\n\nimport * as React from \"react\"\nimport { createTimeline, splitText, stagger } from \"animejs\"\n\nimport { cn } from \"@/lib/utils\"\n\ninterface AnimeCharFlipProps {\n  children: string\n  className?: string\n  duration?: number\n  staggerBy?: number\n}\n\nconst CHAR_TEMPLATE = `<span class=\"char-3d\">\n  <em class=\"face face-top\">{value}</em>\n  <em class=\"face face-front\">{value}</em>\n  <em class=\"face face-bottom\">{value}</em>\n</span>`\n\nexport function AnimeCharFlip({\n  children,\n  className,\n  duration = 750,\n  staggerBy = 100,\n}: AnimeCharFlipProps) {\n  const ref = React.useRef<HTMLParagraphElement>(null)\n\n  React.useEffect(() => {\n    const element = ref.current\n    if (!element) return\n\n    const split = splitText(element, { chars: CHAR_TEMPLATE })\n    const charsStagger = stagger(staggerBy, { start: 0 })\n\n    const timeline = createTimeline({\n      defaults: { ease: \"linear\", loop: true, duration },\n    })\n      .add(\".char-3d\", { rotateX: -90 }, charsStagger)\n      .add(\".char-3d .face-top\", { opacity: [0.5, 0] }, charsStagger)\n      .add(\".char-3d .face-front\", { opacity: [1, 0.5] }, charsStagger)\n      .add(\".char-3d .face-bottom\", { opacity: [0.5, 1] }, charsStagger)\n\n    return () => {\n      timeline.revert()\n      split.revert()\n    }\n  }, [children, duration, staggerBy])\n\n  return (\n    <p\n      ref={ref}\n      className={cn(\n        \"[perspective:1000px]\",\n        // Each character becomes a three-faced box rotating around its centre.\n        \"[&_.char-3d]:relative [&_.char-3d]:inline-block [&_.char-3d]:[transform-style:preserve-3d]\",\n        \"[&_.face]:absolute [&_.face]:top-0 [&_.face]:left-0 [&_.face]:not-italic\",\n        \"[&_.face-top]:[transform:rotateX(90deg)_translateZ(0.5em)]\",\n        \"[&_.face-front]:[transform:translateZ(0.5em)]\",\n        \"[&_.face-bottom]:[transform:rotateX(-90deg)_translateZ(0.5em)]\",\n        \"[&_.face-front]:relative [&_.face-front]:not-italic\",\n        className\n      )}\n    >\n      {children}\n    </p>\n  )\n}\n",
+      "type": "registry:ui",
+      "target": "@components/ui-animations/anime-char-flip.tsx"
+    }
+  ],
+  "categories": [
+    "ui-animations"
+  ],
+  "type": "registry:ui"
+}

@@ -1,0 +1,21 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "anime-line-draw",
+  "title": "Anime Line Draw",
+  "description": "Draws SVG strokes on as if being sketched, using anime.js createDrawable.",
+  "dependencies": [
+    "animejs"
+  ],
+  "files": [
+    {
+      "path": "registry/ui-animations/anime-line-draw/anime-line-draw.tsx",
+      "content": "\"use client\"\n\nimport * as React from \"react\"\nimport { animate, stagger, svg } from \"animejs\"\n\nimport { cn } from \"@/lib/utils\"\n\ninterface AnimeLineDrawProps {\n  /** Path data for each stroke, drawn in order. */\n  paths: string[]\n  viewBox?: string\n  className?: string\n  strokeWidth?: number\n  duration?: number\n  staggerBy?: number\n  loop?: boolean\n}\n\nexport function AnimeLineDraw({\n  paths,\n  viewBox = \"0 0 128 128\",\n  className,\n  strokeWidth = 2,\n  duration = 2000,\n  staggerBy = 100,\n  loop = true,\n}: AnimeLineDrawProps) {\n  const svgRef = React.useRef<SVGSVGElement>(null)\n\n  // Compared by content so an inline `paths` array does not restart the\n  // animation on every render of the parent.\n  const pathsKey = JSON.stringify(paths)\n\n  React.useEffect(() => {\n    const element = svgRef.current\n    if (!element) return\n\n    const lines = element.querySelectorAll(\"path\")\n    if (lines.length === 0) return\n\n    const animation = animate(svg.createDrawable(lines), {\n      draw: [\"0 0\", \"0 1\", \"1 1\"],\n      ease: \"inOutQuad\",\n      duration,\n      delay: stagger(staggerBy),\n      loop,\n    })\n\n    return () => {\n      animation.revert()\n    }\n  }, [pathsKey, duration, staggerBy, loop])\n\n  return (\n    <svg\n      ref={svgRef}\n      viewBox={viewBox}\n      fill=\"none\"\n      xmlns=\"http://www.w3.org/2000/svg\"\n      className={cn(className)}\n    >\n      {paths.map((d, index) => (\n        <path\n          key={index}\n          d={d}\n          stroke=\"currentColor\"\n          strokeWidth={strokeWidth}\n          strokeLinecap=\"round\"\n          strokeLinejoin=\"round\"\n        />\n      ))}\n    </svg>\n  )\n}\n",
+      "type": "registry:ui",
+      "target": "@components/ui-animations/anime-line-draw.tsx"
+    }
+  ],
+  "categories": [
+    "ui-animations"
+  ],
+  "type": "registry:ui"
+}

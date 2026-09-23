@@ -522,6 +522,120 @@
           "target": "@components/scroll/gsap-split-text.tsx"
         }
       ]
+    },
+    {
+      "name": "thinking-block",
+      "type": "registry:ui",
+      "title": "Thinking Block",
+      "description": "A collapsible 'thinking' panel with a blinking live state, for streaming model output.",
+      "categories": [
+        "ai"
+      ],
+      "dependencies": [
+        "motion"
+      ],
+      "files": [
+        {
+          "path": "registry/ai/thinking-block/thinking-block.tsx",
+          "type": "registry:ui",
+          "target": "@components/ai/thinking-block.tsx"
+        }
+      ]
+    },
+    {
+      "name": "thought-chain",
+      "type": "registry:ui",
+      "title": "Thought Chain",
+      "description": "A vertical chain of reasoning steps with status dots and a blinking active step.",
+      "categories": [
+        "ai"
+      ],
+      "dependencies": [
+        "motion"
+      ],
+      "files": [
+        {
+          "path": "registry/ai/thought-chain/thought-chain.tsx",
+          "type": "registry:ui",
+          "target": "@components/ai/thought-chain.tsx"
+        }
+      ]
+    },
+    {
+      "name": "anime-text-bounce",
+      "type": "registry:ui",
+      "title": "Anime Text Bounce",
+      "description": "Per-character bounce-in built with anime.js splitText and staggered keyframes.",
+      "categories": [
+        "ui-animations"
+      ],
+      "dependencies": [
+        "animejs"
+      ],
+      "files": [
+        {
+          "path": "registry/ui-animations/anime-text-bounce/anime-text-bounce.tsx",
+          "type": "registry:ui",
+          "target": "@components/ui-animations/anime-text-bounce.tsx"
+        }
+      ]
+    },
+    {
+      "name": "anime-svg-distort",
+      "type": "registry:ui",
+      "title": "Anime SVG Distort",
+      "description": "Animated SVG turbulence filter and polygon point morphing, built with anime.js.",
+      "categories": [
+        "ui-animations"
+      ],
+      "dependencies": [
+        "animejs"
+      ],
+      "files": [
+        {
+          "path": "registry/ui-animations/anime-svg-distort/anime-svg-distort.tsx",
+          "type": "registry:ui",
+          "target": "@components/ui-animations/anime-svg-distort.tsx"
+        }
+      ]
+    },
+    {
+      "name": "anime-line-draw",
+      "type": "registry:ui",
+      "title": "Anime Line Draw",
+      "description": "Draws SVG strokes on as if being sketched, using anime.js createDrawable.",
+      "categories": [
+        "ui-animations"
+      ],
+      "dependencies": [
+        "animejs"
+      ],
+      "files": [
+        {
+          "path": "registry/ui-animations/anime-line-draw/anime-line-draw.tsx",
+          "type": "registry:ui",
+          "target": "@components/ui-animations/anime-line-draw.tsx"
+        }
+      ]
+    },
+    {
+      "name": "anime-char-flip",
+      "type": "registry:ui",
+      "title": "Anime Char Flip",
+      "description": "Characters flip on a 3D cube face-by-face, built with anime.js splitText templates.",
+      "categories": [
+        "ui-animations"
+      ],
+      "dependencies": [
+        "animejs"
+      ],
+      "files": [
+        {
+          "path": "registry/ui-animations/anime-char-flip/anime-char-flip.tsx",
+          "type": "registry:ui",
+          "target": "@components/ui-animations/anime-char-flip.tsx"
+        }
+      ]
     }
   ]
 }

@@ -1,0 +1,21 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "thought-chain",
+  "title": "Thought Chain",
+  "description": "A vertical chain of reasoning steps with status dots and a blinking active step.",
+  "dependencies": [
+    "motion"
+  ],
+  "files": [
+    {
+      "path": "registry/ai/thought-chain/thought-chain.tsx",
+      "content": "\"use client\"\n\nimport * as React from \"react\"\nimport { motion } from \"motion/react\"\nimport { Check, Loader2 } from \"lucide-react\"\n\nimport { cn } from \"@/lib/utils\"\n\nexport type ThoughtStatus = \"done\" | \"active\" | \"pending\"\n\nexport type ThoughtStep = {\n  title: string\n  description?: string\n  status?: ThoughtStatus\n  /** Pulses the step's dot, for the step currently being worked on. */\n  blink?: boolean\n}\n\ninterface ThoughtChainProps {\n  items: ThoughtStep[]\n  className?: string\n}\n\nexport function ThoughtChain({ items, className }: ThoughtChainProps) {\n  return (\n    <ol className={cn(\"relative\", className)}>\n      {items.map((item, index) => {\n        const status = item.status ?? \"done\"\n        const isLast = index === items.length - 1\n\n        return (\n          <li key={index} className=\"relative flex gap-3 pb-6 last:pb-0\">\n            {!isLast && (\n              <span\n                aria-hidden=\"true\"\n                className=\"absolute top-6 left-[11px] h-[calc(100%-1.5rem)] w-px bg-border\"\n              />\n            )}\n\n            <span\n              className={cn(\n                \"relative z-10 mt-0.5 flex size-6 shrink-0 items-center justify-center rounded-full border bg-background\",\n                status === \"done\" && \"border-foreground/30\",\n                status === \"active\" && \"border-foreground\",\n                status === \"pending\" && \"border-dashed\"\n              )}\n            >\n              {item.blink && (\n                <motion.span\n                  aria-hidden=\"true\"\n                  className=\"absolute inset-0 rounded-full bg-foreground/20\"\n                  animate={{ opacity: [0.6, 0, 0.6], scale: [1, 1.6, 1] }}\n                  transition={{\n                    duration: 1.6,\n                    repeat: Infinity,\n                    ease: \"easeInOut\",\n                  }}\n                />\n              )}\n\n              {status === \"done\" && <Check className=\"size-3.5\" />}\n              {status === \"active\" && (\n                <Loader2 className=\"size-3.5 animate-spin\" />\n              )}\n              {status === \"pending\" && (\n                <span className=\"size-1.5 rounded-full bg-muted-foreground\" />\n              )}\n            </span>\n\n            <div className=\"min-w-0 flex-1\">\n              <p className=\"text-sm font-medium\">{item.title}</p>\n              {item.description && (\n                <p className=\"mt-0.5 text-sm text-muted-foreground\">\n                  {item.description}\n                </p>\n              )}\n            </div>\n          </li>\n        )\n      })}\n    </ol>\n  )\n}\n",
+      "type": "registry:ui",
+      "target": "@components/ai/thought-chain.tsx"
+    }
+  ],
+  "categories": [
+    "ai"
+  ],
+  "type": "registry:ui"
+}
