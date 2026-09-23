@@ -24,12 +24,14 @@ export function AnimeTextBounce({
     const element = ref.current
     if (!element) return
 
-    const { chars, revert } = splitText(element, {
+    // Kept whole rather than destructured: revert() is a method on the
+    // splitter instance and loses `this` when pulled off the object.
+    const split = splitText(element, {
       words: false,
       chars: true,
     })
 
-    const animation = animate(chars, {
+    const animation = animate(split.chars, {
       y: [
         { to: "-2.75rem", ease: "outExpo", duration: 600 },
         { to: 0, ease: "outBounce", duration: 800, delay: 100 },
@@ -46,7 +48,7 @@ export function AnimeTextBounce({
 
     return () => {
       animation.revert()
-      revert()
+      split.revert()
     }
   }, [children, loop, loopDelay])
 

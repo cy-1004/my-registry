@@ -142,6 +142,14 @@ const DEMOS: Record<string, React.ComponentType> = {
     () => import("@/registry/three/anime-three-cube-grid/demo"),
     { ssr: false }
   ),
+  "anime-scramble-text": dynamic(
+    () => import("@/registry/ui-animations/anime-scramble-text/demo"),
+    { ssr: false }
+  ),
+  "anime-words-3d": dynamic(
+    () => import("@/registry/ui-animations/anime-words-3d/demo"),
+    { ssr: false }
+  ),
 }
 
 interface ComponentPreviewProps {

@@ -676,6 +676,44 @@
           "target": "@components/three/anime-three-cube-grid.tsx"
         }
       ]
+    },
+    {
+      "name": "anime-scramble-text",
+      "type": "registry:ui",
+      "title": "Anime Scramble Text",
+      "description": "Scramble reveal with a configurable cursor, character set, and reveal direction, built on anime.js scrambleText.",
+      "categories": [
+        "ui-animations"
+      ],
+      "dependencies": [
+        "animejs"
+      ],
+      "files": [
+        {
+          "path": "registry/ui-animations/anime-scramble-text/anime-scramble-text.tsx",
+          "type": "registry:ui",
+          "target": "@components/ui-animations/anime-scramble-text.tsx"
+        }
+      ]
+    },
+    {
+      "name": "anime-words-3d",
+      "type": "registry:ui",
+      "title": "Anime Words 3D",
+      "description": "Splits text into words and pushes them out in 3D with a randomised stagger.",
+      "categories": [
+        "ui-animations"
+      ],
+      "dependencies": [
+        "animejs"
+      ],
+      "files": [
+        {
+          "path": "registry/ui-animations/anime-words-3d/anime-words-3d.tsx",
+          "type": "registry:ui",
+          "target": "@components/ui-animations/anime-words-3d.tsx"
+        }
+      ]
     }
   ]
 }

@@ -1,0 +1,21 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "anime-words-3d",
+  "title": "Anime Words 3D",
+  "description": "Splits text into words and pushes them out in 3D with a randomised stagger.",
+  "dependencies": [
+    "animejs"
+  ],
+  "files": [
+    {
+      "path": "registry/ui-animations/anime-words-3d/anime-words-3d.tsx",
+      "content": "\"use client\"\n\nimport * as React from \"react\"\nimport { animate, splitText, stagger } from \"animejs\"\nimport type { TextSplitter } from \"animejs\"\n\nimport { cn } from \"@/lib/utils\"\n\ninterface AnimeWords3DProps {\n  children: string\n  /** Drives the effect: true pushes the words out, false returns them. */\n  expanded: boolean\n  className?: string\n  /** How far each word travels toward the viewer. */\n  distance?: string\n  /** Tilt applied to the whole block while expanded. */\n  rotateY?: number\n  rotateX?: number\n  /** Opacity of the words while expanded. */\n  opacity?: number\n  duration?: number\n  /** Gap between each word's start, in ms. */\n  staggerBy?: number\n  /** Order the stagger walks through the words. */\n  from?: \"first\" | \"last\" | \"center\" | \"random\"\n  perspective?: string\n}\n\nexport function AnimeWords3D({\n  children,\n  expanded,\n  className,\n  distance = \"6rem\",\n  rotateY = 60,\n  rotateX = 0,\n  opacity = 0.75,\n  duration = 750,\n  staggerBy = 40,\n  from = \"random\",\n  perspective = \"1000px\",\n}: AnimeWords3DProps) {\n  const containerRef = React.useRef<HTMLParagraphElement>(null)\n  const splitRef = React.useRef<TextSplitter | null>(null)\n  const [ready, setReady] = React.useState(false)\n\n  React.useEffect(() => {\n    const element = containerRef.current\n    if (!element) return\n\n    // Kept whole: revert() is a method on the splitter and needs its `this`.\n    const split = splitText(element, { words: true, chars: false })\n    splitRef.current = split\n    setReady(true)\n\n    return () => {\n      split.revert()\n      splitRef.current = null\n    }\n  }, [children])\n\n  React.useEffect(() => {\n    const element = containerRef.current\n    const split = splitRef.current\n    if (!element || !split || !ready) return\n\n    const blockAnimation = animate(element, {\n      rotateY: expanded ? rotateY : 0,\n      rotateX: expanded ? rotateX : 0,\n      duration,\n      ease: \"inOutQuad\",\n    })\n\n    const wordAnimation = animate(split.words, {\n      z: expanded ? distance : \"0rem\",\n      opacity: expanded ? opacity : 1,\n      duration,\n      ease: \"inOutQuad\",\n      delay: stagger(staggerBy, { from }),\n    })\n\n    return () => {\n      blockAnimation.revert()\n      wordAnimation.revert()\n    }\n  }, [\n    ready,\n    expanded,\n    distance,\n    rotateY,\n    rotateX,\n    opacity,\n    duration,\n    staggerBy,\n    from,\n  ])\n\n  return (\n    <p\n      ref={containerRef}\n      className={cn(\"[transform-style:preserve-3d]\", className)}\n      style={{ perspective }}\n    >\n      {children}\n    </p>\n  )\n}\n",
+      "type": "registry:ui",
+      "target": "@components/ui-animations/anime-words-3d.tsx"
+    }
+  ],
+  "categories": [
+    "ui-animations"
+  ],
+  "type": "registry:ui"
+}
